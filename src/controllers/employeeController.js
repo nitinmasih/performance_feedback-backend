@@ -28,14 +28,14 @@ export const addEmployee = async (req, res) => {
           process.env.JWT_SECRET,
           { expiresIn: '48h' }
     );
-     console.log(token)
+ 
     res.status(201).json({ 
           message: 'Employee created successfully', 
           employee: newEmployee,
           token 
     });
 } catch (error) {
-    console.error(error);
+
     res.status(500).json({ message: 'Server error' });
 }
 };
@@ -51,7 +51,7 @@ export const getAllEmployees = async (req ,res) => {
                   message: "Could found data",
                   error
             })
-            console.log(error)
+      
       }
 
 }
@@ -72,7 +72,6 @@ export const getEmployeeById = async (req, res) => {
 
     res.status(200).json(employee);
   } catch (error) {
-    console.error(error);
 
     if (error.kind === 'ObjectId') {
       return res.status(400).json({ message: 'Invalid employee ID' });
@@ -97,7 +96,7 @@ export const updateEmployee = async (req, res) => {
     }
     res.status(200).json({ message: 'Employee updated successfully', employee: updatedEmployee });
   } catch (error) {
-    console.error(error);
+
 
   
     if (error.kind === 'ObjectId') {
@@ -122,7 +121,6 @@ export const deleteEmployee = async (req, res) => {
     }
     res.status(200).json({ message: 'Employee deleted successfully' });
   } catch (error) {
-    console.error(error);
 
     if (error.kind === 'ObjectId') {
       return res.status(400).json({ message: 'Invalid employee ID' });

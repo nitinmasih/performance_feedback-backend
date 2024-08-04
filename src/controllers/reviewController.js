@@ -1,5 +1,5 @@
-
 import Review from "../models/reviewModel.js";
+
 // Initiate a new review
 export const initiateReview = async (req, res) => {
   try {
@@ -11,17 +11,17 @@ export const initiateReview = async (req, res) => {
       eligibleUsers,
       closeByDate,
       initiatedBy,
-      isOpen:true
+      isOpen: true,
     });
 
     await newReview.save();
 
     res.status(201).json({ success: true, data: newReview });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
 
 
 // Assign eligible users to review
@@ -45,17 +45,14 @@ export const assignEligibleUsers = async (req, res) => {
   }
 };
 
-
-
+// Close a review
 export const closeReview = async (req, res) => {
   try {
-    const { id } = req.params;
-  
+    const { reviewId } = req.params; // Use reviewId instead of id
+
     const now = new Date();
-  console.log(id)
-    
-    const review = await Review.findOne({ initiatedFor: id });
-    console.log(review)
+
+    const review = await Review.findById(reviewId); // Find the review by its ID
     if (!review) {
       return res.status(404).send({ message: 'Review not found.' });
     }
@@ -64,16 +61,16 @@ export const closeReview = async (req, res) => {
       return res.status(400).send({ message: 'Review is already closed.' });
     }
 
-
     review.isOpen = false;
     review.closedAt = now;
     await review.save();
-    
+
     res.status(200).send({ message: 'Review closed successfully.' });
   } catch (error) {
     res.status(500).send({ message: 'Error closing review.', error: error.message });
   }
 };
+
 
 
 export const getReviewStatus = async (req, res) => {
@@ -114,9 +111,6 @@ export const reviewEligibity = async(req, res) =>{
     
     const userId = req.user.id; 
 
-    console.log('User ID:', userId);
-    console.log('Employee ID:', id);
-
     const review = await Review.findOne({ initiatedFor: id });
 
     if (review && review.eligibleUsers.includes(userId.toString())) {
@@ -125,7 +119,7 @@ export const reviewEligibity = async(req, res) =>{
       return res.json({ isEligible: false });
     }
   } catch (error) {
-    console.log(error)
+
     res.status(500).json({ message: 'Server error' });
   }
 }

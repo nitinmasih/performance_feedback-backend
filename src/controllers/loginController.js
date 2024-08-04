@@ -38,11 +38,11 @@ export const loginController = async (req, res) => {
                 user: { id: user._id, role: user.role, name: user.name }
             });
         } else {
-            console.log("Invalid email")
+          
             return res.status(401).json({ message: 'Invalid email or password.' });
         }
     } catch (error) {
-        console.error('Login error:', error);
+        
         res.status(500).json({ message: 'Server error.' });
     }
 };

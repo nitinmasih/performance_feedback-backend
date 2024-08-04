@@ -4,7 +4,6 @@ import connectDB from "./src/database/dbConfig.js";
 import cors from "cors";
 
 import employeeRoute from "./src/routes/employeeRoute.js";
-import feedRoute from "./src/routes/feedbackRoute.js";
 import loginRoute from "./src/routes/loginRoutes.js";
 import reviewRoute from "./src/routes/reviewRoute.js"
 
@@ -22,7 +21,6 @@ connectDB();
 
 // Define routes
 app.use("/api/v1/employees", employeeRoute);
-app.use("/api/v1/feedback", feedRoute);
 app.use("/api/v1/employees", loginRoute); 
 app.use('/api/v1/reviews', reviewRoute);
 

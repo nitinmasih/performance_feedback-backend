@@ -1,4 +1,3 @@
-// middleware/authMiddleware.js
 import jwt from 'jsonwebtoken';
 import { configDotenv } from 'dotenv';
 configDotenv();
@@ -13,8 +12,9 @@ const authMiddleware = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the token
     req.user = decoded; 
+    next();
   } catch (error) {
-    console.error('Token verification failed:', error);
+
     res.status(401).json({ message: 'Token is not valid' });
   }
 };
